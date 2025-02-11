@@ -3,7 +3,7 @@ export interface User {
     img: string,
     name: string,
     lastname: string,
-    age: number,
+    birth_date: string,
     email: string,
     password: string,
     purchaseHistory?: Purchase[],

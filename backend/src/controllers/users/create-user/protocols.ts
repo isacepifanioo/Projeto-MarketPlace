@@ -13,7 +13,7 @@ export interface CreateUserParams {
   img: string;
   name: string;
   lastname: string;
-  age: number;
+  birth_date: string;
   email: string;
   password: string;
   confirmPassword: string;

@@ -28,7 +28,6 @@ export class UpdateUserController implements IUpdateUserController {
         "img",
         "name",
         "lastname",
-        "age",
         "password",
         "confirmPassword",
       ];

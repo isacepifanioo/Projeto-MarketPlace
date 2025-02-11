@@ -10,6 +10,7 @@ import { Users } from "../../../models/Users";
 import bcrypt from "bcrypt";
 
 import { createToken } from "../../../helper/create-token";
+import { isAdult } from "../../../helper/isAdult";
 
 export class CreateUserController implements ICreateUserController {
   constructor(private readonly CreateUserRepository: IcreateUserRepository) {}
@@ -22,7 +23,7 @@ export class CreateUserController implements ICreateUserController {
         "img",
         "name",
         "lastname",
-        "age",
+        "birth_date",
         "email",
         "password",
         "confirmPassword",
@@ -48,6 +49,22 @@ export class CreateUserController implements ICreateUserController {
             Body: `O campo ${key} não pode esta vazio`,
           };
         }
+      }
+
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+
+      if(!dateRegex.test(User.birth_date)) {
+        return {
+          StatusCode: 400,
+          Body: `O formato da data de nascimento esta errado.`,
+        };
+      }
+
+      if(!isAdult(User.birth_date)) {
+        return {
+          StatusCode: 400,
+          Body: `Você precisa ser maior de 18 anos.`,
+        };
       }
 
       if (User.password !== User.confirmPassword) {
