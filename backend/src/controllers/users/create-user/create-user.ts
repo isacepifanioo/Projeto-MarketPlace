@@ -23,10 +23,10 @@ export class CreateUserController implements ICreateUserController {
         "img",
         "name",
         "lastname",
-        "birth_date",
         "email",
         "password",
         "confirmPassword",
+        "birth_date",
       ];
 
       if (!User!.img) {
@@ -60,10 +60,11 @@ export class CreateUserController implements ICreateUserController {
         };
       }
 
+
       if(!isAdult(User.birth_date)) {
         return {
           StatusCode: 400,
-          Body: `Você precisa ser maior de 18 anos.`,
+          Body: 'Você precisa ser maior de 18 anos.',
         };
       }
 
@@ -73,6 +74,7 @@ export class CreateUserController implements ICreateUserController {
           Body: `A confirmação da senha não corresponde à senha informada.`,
         };
       }
+      
 
       const isEmailValid = isEmail(User.email);
 
@@ -82,6 +84,7 @@ export class CreateUserController implements ICreateUserController {
           Body: "E-mail inválido, Tente Novamente",
         };
       }
+
 
       const email = await Users.findOne({ email: User.email }).lean();
       if (email?.email.toLowerCase() === User.email.toLowerCase()) {
@@ -96,7 +99,6 @@ export class CreateUserController implements ICreateUserController {
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, img, ...rest } = User!;
-
       const newImg = img.replace("src\\uploads\\users\\", "uploads/users/");
 
       const newBody = {

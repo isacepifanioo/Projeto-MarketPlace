@@ -7,7 +7,20 @@ import bcrypt from 'bcrypt'
 export class LoginUserController implements ILoginUserController {
     constructor(private readonly LoginUserRepository: ILoginUserRepository){}
     async handle(body: CreateLoginUserParams): Promise<httpRespose<User>> {
-        // const User = await Users.findOne({email: body.email}).lean()
+
+        const keyUser = [
+            "email",
+            "password",
+          ];
+        
+        for (const key of keyUser) {
+                if (!body?.[key as keyof CreateLoginUserParams]) {
+                  return {
+                    StatusCode: 400,
+                    Body: `O campo ${key} não pode esta vazio`,
+                  };
+                }
+              }
 
         const User = await this.LoginUserRepository.loginUser(body)
 

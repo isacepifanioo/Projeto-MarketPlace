@@ -10,7 +10,7 @@ export function deleteImagens(imagens: string[] | string) {
         }
 
     } else {
-        fs.unlink(path.resolve(__dirname, "../", imagens), () => console.log('deleted'))
+        fs.unlink(path.resolve(__dirname, "../../", imagens), () => console.log('deleted'))
     }
 
 }

@@ -14,6 +14,9 @@ const main = async () => {
   config();
   const app = express();
 
+  app.use(express.urlencoded({ extended: true }));
+  app.use(express.json());
+
   app.use(
     "/uploads/users",
     express.static(`${path.join(__dirname)}/uploads/users`)
@@ -27,8 +30,6 @@ const main = async () => {
     express.static(`${path.join(__dirname)}/uploads/reviews`)
   );
 
-  app.use(express.urlencoded({ extended: true }));
-  app.use(express.json());
   const allowedOrigin = "http://localhost:5173"
   app.use(cors({ origin: allowedOrigin}))
 
