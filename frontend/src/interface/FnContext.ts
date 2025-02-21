@@ -8,6 +8,7 @@ export interface httpRespose<T> {
 
 export interface IFnAuth {
     isAuth: boolean
+    logout: () => void
     login: (user: UserLogin) => Promise<httpRespose<ErrorMessage>>;
     register: (register: UserRegister) => Promise<httpRespose<ErrorMessage>>;
 }

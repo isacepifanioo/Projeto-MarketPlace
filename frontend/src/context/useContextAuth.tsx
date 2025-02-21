@@ -6,8 +6,8 @@ import { IFnAuth } from "../interface/FnContext";
 export const ContextAuth = createContext<IFnAuth | undefined>(undefined)
 
 export const ContextProvider = ({children}: {children: React.JSX.Element[]}) => {
-    const { login, isAuth, register } = Auth() 
+    const { login, isAuth, register, logout } = Auth() 
 
-    return <ContextAuth.Provider value={{login, isAuth, register}}>{children}</ContextAuth.Provider>
+    return <ContextAuth.Provider value={{login, isAuth, register, logout}}>{children}</ContextAuth.Provider>
 
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { InstacieAxios } from "../helper/Instancer";
 import axios from "axios";
 import { UserLogin, UserRegister } from "../interface/User";
@@ -9,10 +9,16 @@ import { isAdult } from "../helper/isAdult";
 export function Auth(): IFnAuth {
   const [isAuth, setIsAuth] = useState(false);
 
+  useEffect(() => {
+    if(localStorage.getItem('token')) {
+      setIsAuth(true)
+    }
+  }, [isAuth])
+
   async function login(user: UserLogin): Promise<httpRespose<ErrorMessage>> {
     try {
       const data = await InstacieAxios.post("/users/login", user);
-      auth(data.data.token);
+      auth(data.data.token, data.data.body.id);
       return { loading: false };
     } catch (er) {
       let errors: ErrorMessage = {};
@@ -56,7 +62,7 @@ export function Auth(): IFnAuth {
 
     try {
       const DataHttp = await InstacieAxios.post("/users/create", data);
-      auth(DataHttp.data.token);
+      auth(DataHttp.data.token, DataHttp.data.body.id);
       return { loading: false };
     } catch (er) {
       let errors: ErrorMessage = {};
@@ -91,10 +97,17 @@ export function Auth(): IFnAuth {
     }
   }
 
-  function auth(token: string) {
+  function auth(token: string, id: string) {
     localStorage.setItem("token", JSON.stringify(token));
+    localStorage.setItem("user", JSON.stringify(id));
     setIsAuth(true);
   }
 
-  return { login, isAuth, register };
+  function logout() {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    setIsAuth(false);
+  }
+
+  return { login, isAuth, register, logout };
 }
