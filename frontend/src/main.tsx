@@ -5,6 +5,7 @@ import { GlobalStyled } from "./GlobalStyele.tsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { PageAuth } from "./components/pages/auth/PageAuth.tsx";
 import App from "./App.tsx";
+import { Home } from "./components/pages/home/Home.tsx";
 
 const router = createBrowserRouter([
   {
@@ -13,7 +14,13 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: <App/>
+    element: <App/>,
+    children: [
+      {
+        path: '/',
+        element: <Home/>
+      }
+    ]
   }
 ]);
 

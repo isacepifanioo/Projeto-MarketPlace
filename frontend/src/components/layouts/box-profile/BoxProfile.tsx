@@ -19,6 +19,8 @@ export const BoxProfile = () => {
         <div className="borders"></div>
       </StyleTriangleBoxProfile>
       <StyledInnerBoxProfile>
+        <Link to='/auth' onClick={logout}>Perfil</Link>
+        <Link to='/' onClick={logout}>Configuração</Link>
         <Link to='/auth' onClick={logout}>Sair</Link>
       </StyledInnerBoxProfile>
       <StyledBoxProfile />

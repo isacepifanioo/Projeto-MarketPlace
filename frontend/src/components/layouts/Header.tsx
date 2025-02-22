@@ -16,11 +16,12 @@ import { StyledSpiner } from "../../spiner/Spine.styled";
 import { BoxProfile } from "./box-profile/BoxProfile";
 
 import { useRef } from "react";
+import { UserRegister } from "../../interface/User";
 
 export default function Header() {
   const { isAuth } = useContext(ContextAuth) as IFnAuth;
   const [isOpen, SetIsOPen] = useState(false);
-  const { data, loading } = useAxios({
+  const { data, loading } = useAxios<UserRegister>({
     method: "get",
     url: `/users/${JSON.parse(localStorage.getItem("user") as string)}`,
   });

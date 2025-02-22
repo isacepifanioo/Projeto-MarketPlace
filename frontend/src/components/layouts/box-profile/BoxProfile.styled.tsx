@@ -3,16 +3,16 @@ import styled from "styled-components";
 export const StyledBoxProfile = styled.div`
   position: absolute;
   top: 59px;
-  left: -85px;
-  width: 130px;
+  left: -155px;
+  width: 200px;
   border: 1px solid black;
 `;
 
 export const StyledInnerBoxProfile = styled.div`
   position: absolute;
   top: 60px;
-  left: -85px;
-  width: 130px;
+  left: -155px;
+  width: 200px;
   border: 1px solid black;
   border-radius: 0 0 5px 5px;
   border-top: none;
@@ -24,16 +24,13 @@ export const StyledInnerBoxProfile = styled.div`
   & a {
     display: block;
     border-top: 1px solid black;
-    padding: 0.2em;
+    padding: 0.4em;
     font-weight: bolder;
     transition: 0.4s;
   }
   & a:hover {
     background-color: black;
     color: white;
-    border-top: 1px solid black;
-    padding: 0.2em;
-    font-weight: bolder;
   }
 `;
 

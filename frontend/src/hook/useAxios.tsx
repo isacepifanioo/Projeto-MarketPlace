@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { InstacieAxios } from "../helper/Instancer";
-import { UserRegister } from "../interface/User";
+// import { UserRegister } from "../interface/User";
 
 interface Props {
     url: string,
     method: "get" | "post" | "patch" | 'delete',
 }
 
-export function useAxios({ url, method }: Props) {
-    const [data, setData] = useState<UserRegister>()
+export function useAxios<T>({ url, method }: Props) {
+    const [data, setData] = useState<T | null>(null)
     const [error, setError] = useState({})
     const [loading, setLoading] = useState(false)
     
