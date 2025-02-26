@@ -15,10 +15,11 @@ export const Product = () => {
     method: "get",
     url: "/products",
   });
+
   return (
     <>
       {loading && <StyledSpiner />}
-      {data &&
+      {data ?
         data.map((product) => (
           <StyledItens key={product.id}>
             <StyledItensImg $img={`http://localhost:3000/${product.img[0]}`} />
@@ -35,7 +36,7 @@ export const Product = () => {
               </StyledItensConteineBag>
             </StyledItensConteineInforProduct>
           </StyledItens>
-        ))}
+        )) : <StyledItens className="placeholder"/>}
     </>
   );
 };

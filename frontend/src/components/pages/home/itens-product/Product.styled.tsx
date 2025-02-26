@@ -10,6 +10,11 @@ export const StyledItens = styled.div`
   flex-direction: column;
   border-radius: 5px;
   padding: 0.2em;
+
+
+  & .placeholder {
+    width: 100%;
+  }
 `;
 
 export const StyledItensImg = styled.div<Props>`

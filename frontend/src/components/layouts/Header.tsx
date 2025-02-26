@@ -4,6 +4,8 @@ import {
   StyledProfileIcon,
 } from "./Headers.styled";
 
+
+
 import { LuSearch } from "react-icons/lu";
 import { IoCartOutline } from "react-icons/io5";
 import { IoStorefront } from "react-icons/io5";
@@ -17,6 +19,7 @@ import { BoxProfile } from "./box-profile/BoxProfile";
 
 import { useRef } from "react";
 import { UserRegister } from "../../interface/User";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const { isAuth } = useContext(ContextAuth) as IFnAuth;
@@ -61,9 +64,9 @@ export default function Header() {
         </div>
         <div className="conteineLiks">
           <nav className="navBar">
-            <a href="#">Inicio</a>
-            <a href="#">Minhas Compras</a>
-            <a href="#">Sobre</a>
+            <Link to="/">Inicio</Link>
+            <Link to="#">Minhas Compras</Link>
+            <Link to="#">Sobre</Link>
           </nav>
           <div className="navBar linksIcon">
             <div className="box-Links">

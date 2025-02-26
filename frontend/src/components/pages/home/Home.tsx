@@ -3,7 +3,7 @@ import {
   StyledConteineItens,
   StyledConteineSection,
 } from "./Home.styled";
-import banner from "../../../../public/Design sem nome.png";
+import banner from "../../../../public/banner.png";
 import { Product } from "./itens-product/Product";
 export const Home = () => {
   return (
