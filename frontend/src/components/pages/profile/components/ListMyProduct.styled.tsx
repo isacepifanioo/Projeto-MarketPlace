@@ -5,14 +5,20 @@ interface Props {
 }
 
 export const StyledConteineList = styled.div`
+position: relative;
   display: flex;
   flex-direction: column;
   gap: 1em;
+
+  z-index: 0;
+  word-break: break-all;
+  
 `;
 
 export const StyledConteineProduct = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background-color: #e7e4e4;
   border-radius: 15px;
   padding: 0.7em;
@@ -53,20 +59,32 @@ export const StyledStars = styled.div`
 `;
 
 export const StyledLButton = styled.button`
-  display: flex;
+   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; 
   text-align: center;
   width: 70px;
   font-size: 1.5em;
   background-color: transparent;
+  color: #333;
   border: none;
-  height: 100%;
+  height: 70px;
   transition: 0.4s;
-  border-radius: 10px;
+  border-radius: 10px; 
+
+  & a {
+    align-content: center;
+    color: #333;
+    width: 100%;
+    height: 100%;
+  }
 
   &:hover {
     background-color: #333;
+    /* background-color: darkgray; */
     color: #fafafa;
+    & a:hover {
+      color: #fafafa;
+    }
   }
 `;

@@ -12,7 +12,7 @@ export const HeadersProfiles = () => {
         <IoStorefront />
         <div>
             <Link to='/deshboard'>Perfil</Link>
-            <Link to='/createProducts'>Cria Produtos</Link>
+            <Link to='/deshboard/authProducts'>Cria Produtos</Link>
         </div>
     </StyledHeaderProfile>
   )

@@ -63,9 +63,13 @@ export async function CreateProducts(req: Request, res: Response) {
 
   const files = req.files as Express.Multer.File[];
 
-  const imgPaths = files.map((file) =>
-    `${file.destination}/${file.filename}`.replace("src/", "")
-  );
+  let imgPaths;
+ 
+  if(files) {
+    imgPaths = files.map((file) =>
+      `${file.destination}/${file.filename}`.replace("src/", "")
+    );
+  }
 
   const myProductsBody = {
     img: imgPaths,
@@ -77,8 +81,8 @@ export async function CreateProducts(req: Request, res: Response) {
     token
   );
 
-  if(StatusCode !== 201) {
-    deleteImagens(imgPaths)
+  if (StatusCode !== 201) {
+    deleteImagens(imgPaths!);
   }
 
   res.status(StatusCode).json(Body);
@@ -97,8 +101,8 @@ export async function DeleteProduct(req: Request, res: Response) {
     token
   );
 
-  if(StatusCode === 200 && typeof Body === "object") {
-    deleteImagens(Body.img) 
+  if (StatusCode === 200 && typeof Body === "object") {
+    deleteImagens(Body.img);
   }
 
   res.status(StatusCode).json(Body);
@@ -136,9 +140,9 @@ export async function UpdateProduct(req: Request, res: Response) {
     token
   );
 
-  if(StatusCode !== 200 && Array.isArray(imgs)) {
-    deleteImagens(imgs)
+  if (StatusCode !== 200 && Array.isArray(imgs)) {
+    deleteImagens(imgs);
   }
- 
+
   res.status(StatusCode).json(Body);
 }

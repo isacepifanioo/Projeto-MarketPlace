@@ -75,7 +75,6 @@ export const StyledButtonSubmit = styled.button<FormProps>`
   width: 30%;
   height: 47.63px;
   padding: 0.7em;
-  /* 47.63 */
   align-self: ${({ $Auth }) => ($Auth === 0 ? "flex-end" : "")};
   font-size: 1.1em;
   border-radius: 5px;
@@ -105,8 +104,6 @@ export const StyledConteineFile = styled.div<FormProps>`
   position: relative;
   align-self: center;
   margin: 0 auto;
-  /* margin-bottom: 1em; */
-  /* "https://preview.redd.it/l0ergarfzst61.png?auto=webp&s=5de076eac09bb645d58b11cd8ce82f99ec487329" */
   background-image: ${({ $img }) =>
     $img
       ? `url(${$img})`

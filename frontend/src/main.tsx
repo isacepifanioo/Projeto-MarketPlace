@@ -8,6 +8,8 @@ import App from "./App.tsx";
 import { Home } from "./components/pages/home/Home.tsx";
 import { Profile } from "./components/pages/profile/Profile.tsx";
 import { ProfileHome } from "./components/pages/home/Profile.Home.tsx";
+import { CreateProducts } from "./components/pages/authProducts/CreateProducts.tsx";
+import { UpdateProduct } from "./components/pages/updateProduct/UpdateProduct.tsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,14 @@ const router = createBrowserRouter([
       {
         path: '/deshboard',
         element: <Profile/>
+      },
+      {
+        path: '/deshboard/product/:id',
+        element: <UpdateProduct/>
+      },
+      {
+        path: '/deshboard/authProducts',
+        element: <CreateProducts/>
       }
     ]
   }

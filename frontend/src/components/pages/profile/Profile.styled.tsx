@@ -7,6 +7,9 @@ export const StyledSectionProfile = styled.section`
     flex-direction: column;
     gap: 5em;
 
+    position: relative;
+    z-index: 0;
+
 `
 
 

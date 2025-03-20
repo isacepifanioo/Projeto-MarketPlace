@@ -14,7 +14,7 @@ export interface IProducts {
     id: string,
     img: string[],
     name: string,
-    price: number,
+    price: string,
     description: string,
     userId: string,
     qtyPurchase: number,
