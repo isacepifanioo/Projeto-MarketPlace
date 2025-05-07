@@ -5,31 +5,33 @@ import { Error } from "../../layouts/model/Error/Error";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { InstacieAxios } from "../../../helper/Instancer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const UpdateProduct = () => {
+  const navigate = useNavigate();
   const [error, setError] = useState(undefined);
   const [data, setData] = useState<Data>({
     img: [],
     name: "",
-    price: 0,
+    price: "",
     description: "",
   });
-  const {id} = useParams()
+  const { id } = useParams();
 
   useEffect(() => {
     const getProduct = async () => {
-        try {
-            const product = await InstacieAxios.get(`/products/${id}`)
-            setData(product.data)
-        } catch (e) {
-            //
+      try {
+        const product = await InstacieAxios.get(`/products/${id}`);
+        setData(product.data);
+      } catch (e) {
+        if (axios.isAxiosError(e)) {
+          navigate("/deshboard");
         }
-    }
+      }
+    };
 
-    getProduct()
-  },[id])
-
+    getProduct();
+  }, [id, navigate]);
   async function postProduct(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     try {
@@ -42,13 +44,11 @@ export const UpdateProduct = () => {
           value.forEach((blob) => {
             formData.append(`img`, blob);
           });
-        } else if (typeof value === "number") {
-          formData.append(key, value.toString());
         } else {
           formData.append(key, value);
         }
       }
-      await InstacieAxios.post("/products/create", formData, {
+      await InstacieAxios.patch(`/products/update/${id}`, formData, {
         headers: {
           Authorization: `bearer ${JSON.parse(localStorage.getItem("token")!)}`,
         },
@@ -57,7 +57,6 @@ export const UpdateProduct = () => {
       if (axios.isAxiosError(e)) {
         const resposta = e.response?.data;
         setError(resposta);
-        console.log(resposta);
       }
     }
   }
@@ -75,18 +74,25 @@ export const UpdateProduct = () => {
     setError(undefined);
   }
   return (
-    <StyledSectionConteine>
-      {error && (
-        <Error message={error} handleCurretMesagem={handleCurretMesagem} />
-      )}
-      <InforProducts
-        img={data.img}
-        description={data.description}
-        name={data.name}
-        price={data.price}
-        handleDeleteImg={handleDeleteImg}
-      />
-      <AuthProducts setData={setData} handlePostSubmit={postProduct} />
-    </StyledSectionConteine>
+    <>
+      <StyledSectionConteine>
+        {error && (
+          <Error message={error} handleCurretMesagem={handleCurretMesagem} />
+        )}
+        <InforProducts
+          img={data.img}
+          description={data.description}
+          name={data.name}
+          price={data.price}
+          handleDeleteImg={handleDeleteImg}
+        />
+        <AuthProducts
+          setData={setData}
+          handlePostSubmit={postProduct}
+          data={data}
+          nameBtn="Editar Produto"
+        />
+      </StyledSectionConteine>
+    </>
   );
 };

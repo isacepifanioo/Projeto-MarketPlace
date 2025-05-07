@@ -11,7 +11,7 @@ export const CreateProducts = () => {
   const [data, setData] = useState<Data>({
     img: [],
     name: "",
-    price: 0,
+    price: '',
     description: "",
   });
 
@@ -27,11 +27,18 @@ export const CreateProducts = () => {
           value.forEach((blob) => {
             formData.append(`img`, blob);
           });
-        } else if (typeof value === "number") {
-          formData.append(key, value.toString());
         } else {
           formData.append(key, value);
         }
+        // if (Array.isArray(value)) {
+        //   value.forEach((blob) => {
+        //     formData.append(`img`, blob);
+        //   });
+        // } else if (typeof value === "number") {
+        //   formData.append(key, value.toString());
+        // } else {
+        //   formData.append(key, value);
+        // }
       }
       await InstacieAxios.post("/products/create", formData, {
         headers: {
@@ -70,7 +77,7 @@ export const CreateProducts = () => {
         price={data.price}
         handleDeleteImg={handleDeleteImg}
       />
-      <AuthProducts setData={setData} handlePostSubmit={postProduct}/>
+      <AuthProducts setData={setData} handlePostSubmit={postProduct} nameBtn=" Cria Produto"/>
     </StyledSectionConteine>
   );
 };

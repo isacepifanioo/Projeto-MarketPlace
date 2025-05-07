@@ -35,15 +35,15 @@ const router = createBrowserRouter([
         element: <Profile/>
       },
       {
-        path: '/deshboard/product/:id',
-        element: <UpdateProduct/>
-      },
-      {
         path: '/deshboard/authProducts',
         element: <CreateProducts/>
       }
     ]
-  }
+  },
+  {
+    path: '/deshboard/product/:id',
+    element: <UpdateProduct/>
+  },
 
 ]);
 

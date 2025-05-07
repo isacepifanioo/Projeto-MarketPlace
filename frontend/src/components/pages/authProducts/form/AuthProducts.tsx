@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   StyledConteine,
   StyledForm,
@@ -10,16 +10,21 @@ import { StyledButtonSubmit } from "../../../auth/Auth.styled";
 export interface Data {
   img: Blob[];
   name: string;
-  price: number;
+  price: string;
   description: string;
 }
 
 interface Props {
   setData: React.Dispatch<React.SetStateAction<Data>>;
   handlePostSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  nameBtn: string
+  data?: Data
 }
 
-export default function AuthProducts({ setData, handlePostSubmit }: Props) {
+export default function AuthProducts({ setData, handlePostSubmit, data, nameBtn }: Props) {
+  const nameRef = useRef<HTMLInputElement>(null)
+  const priceRef = useRef<HTMLInputElement>(null)
+  const descriptionRef = useRef<HTMLTextAreaElement>(null)
   function handleOnChange(
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
@@ -42,6 +47,24 @@ export default function AuthProducts({ setData, handlePostSubmit }: Props) {
       }));
     }
   }
+
+  useEffect(() => {
+    if(data) {
+      
+      if(data.name) {
+        nameRef!.current!.value = data.name
+      }
+      if(data.price) {
+        priceRef!.current!.value = data.price
+      }
+
+      if(data.description) {
+        descriptionRef!.current!.value = data.description
+      }
+
+    }
+  }, [data])
+
   return (
     <StyledConteine>
       <StyledForm onSubmit={(e) => handlePostSubmit(e)}>
@@ -56,6 +79,7 @@ export default function AuthProducts({ setData, handlePostSubmit }: Props) {
           onChange={handleOnChange}
           minLength={10}
           maxLength={255}
+          ref={nameRef}
         />
         <StyledInput
           type="text"
@@ -63,6 +87,7 @@ export default function AuthProducts({ setData, handlePostSubmit }: Props) {
           name="price"
           onChange={handleOnChange}
           maxLength={12}
+          ref={priceRef}
           onInput={(e) => {
             e.currentTarget.value = e.currentTarget.value
               .replace(/[^0-9,]/g, "")
@@ -92,9 +117,10 @@ export default function AuthProducts({ setData, handlePostSubmit }: Props) {
           name="description"
           placeholder="Escreva mais informações sobre o produto"
           onChange={handleOnChange}
+          ref={descriptionRef}
         />
         <StyledButtonSubmit type="submit" style={{ width: "100%" }}>
-          Cria Produto
+         {nameBtn}
         </StyledButtonSubmit>
       </StyledForm>
     </StyledConteine>

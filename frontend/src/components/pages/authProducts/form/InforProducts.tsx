@@ -11,7 +11,7 @@ import { MdDelete } from "react-icons/md";
 interface Props {
   img: Blob[];
   name: string;
-  price: number;
+  price: string;
   description: string;
   handleDeleteImg: (position: number) => void
 }
@@ -33,11 +33,11 @@ export const InforProducts = ({ img, name, price, description, handleDeleteImg }
   }
 
   useEffect(() => {
-    if (img.length > 0 && img[0] instanceof Blob) {
+    if (img.length > 0 && img[position] instanceof Blob) {
       const fileUrl = URL.createObjectURL(img[position]);
       setFile(fileUrl);
     } 
-    else if(img.length > 0 && typeof img[0] === 'string') {
+    else if(img.length > 0 && typeof img[position] === 'string') {
       const urlImg = `http://localhost:3000/${img[position]}`
       setFile(urlImg)
     }

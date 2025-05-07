@@ -42,7 +42,7 @@ export class UpdateProductsController implements IUpdateProductsController {
         }
       }
 
-      const keyProducts = ["img", "name", "price", "description"];
+      const keyProducts = ["id", "img", "name", "price", "description", "userId", "qtyPurchase", "qtyStars"];
       for (const key of keyProducts) {
         if (!createProductsParams?.[key as keyof ICreateProductsParams]) {
           return {
@@ -55,7 +55,6 @@ export class UpdateProductsController implements IUpdateProductsController {
       const isNewKey = Object.keys(createProductsParams).filter(
         (prevent) => !keyProducts.includes(prevent)
       );
-
       if (isNewKey.length > 0) {
         return {
           StatusCode: 400,
