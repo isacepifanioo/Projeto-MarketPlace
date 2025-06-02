@@ -80,10 +80,12 @@ export const ListMyProduct = ({ Search, setIsOpen, setProduct, isOpen }: Props) 
               </StyledInforProduct>
               <div className="conteineBtn">
                 <StyledLButton>
-                  <FaEye />
+                  <Link to={`/deshboard/product/${product.id}`}>
+                    <FaEye />
+                  </Link>
                 </StyledLButton>
                 <StyledLButton>
-                  <Link to={`/deshboard/product/${product.id}`}><FaRegEdit /></Link>
+                  <Link to={`/deshboard/update/${product.id}`}><FaRegEdit /></Link>
                 </StyledLButton>
                 <StyledLButton onClick={() => {
                   setIsOpen(prevent => !prevent)

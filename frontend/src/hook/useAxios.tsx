@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { InstacieAxios } from "../helper/Instancer";
 // import { UserRegister } from "../interface/User";
 
@@ -19,18 +19,31 @@ export function useAxios<T>({ url, method }: Props) {
     }
   });
 
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    try {
+      const response = await InstacieAxios({ method, url });
+      setData(response.data);
+      setError({});
+    } catch (err) {
+      setError({err});
+    } finally {
+      setLoading(false);
+    }
+  }, [method, url]);
+
   useEffect(() => {
     setLoading(true)
     async function handleHttp() {
       await InstacieAxios[method](url).then((value) => {
         setData(value.data)
       }).catch((value) => {
-        setError(value)
+        setError(value.message)
       }).finally(() => setLoading(false))
     }
 
     handleHttp();
   }, [url, method]);
 
-  return { data, loading, error }
+  return { data, loading, error, refetch: fetchData }
 }

@@ -10,6 +10,17 @@ import { Profile } from "./components/pages/profile/Profile.tsx";
 import { ProfileHome } from "./components/pages/home/Profile.Home.tsx";
 import { CreateProducts } from "./components/pages/authProducts/CreateProducts.tsx";
 import { UpdateProduct } from "./components/pages/updateProduct/UpdateProduct.tsx";
+import { PageProduct } from "./components/pages/Products/PageProduct.tsx";
+import { CartProvider } from "./context/useContextCart.tsx";
+import { ContextPurchaseProvider } from "./context/useContextPurchase.tsx";
+import { MyPurchase } from "./components/pages/myPurchase/MyPurchase.tsx";
+import { PagePurchase } from "./components/pages/purchase/PagePurchase.tsx";
+import { FormPurchase } from "./components/pages/FormPurchase/FormPurchase.tsx";
+import { EditFormPurchase } from "./components/pages/FormPurchase/EditFormPurchase/EditFormPurchase.tsx";
+export enum ETypeInterface {
+    BUY = "BUY",
+    UPDATE = "UPDATE"
+}
 
 const router = createBrowserRouter([
   {
@@ -23,7 +34,27 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Home/>
-      }
+      },
+      {
+        path: '/myPurchase',
+        element: <MyPurchase/>
+      },
+      {
+        path: '/myPurchase/:id',
+        element: <FormPurchase/>
+      },
+      {
+        path: '/myPurchase/:id/editForm',
+        element: <EditFormPurchase/>
+      },
+      {
+        path: "/:id",
+        element: <PageProduct TypeInterface={ETypeInterface.BUY}/>
+      },
+      {
+        path: "/:id/purchase",
+        element: <PagePurchase/>
+      },
     ]
   },
   {
@@ -41,17 +72,25 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: '/deshboard/product/:id',
+    path: '/deshboard/update/:id',
     element: <UpdateProduct/>
+  },
+  {
+    path: '/deshboard/product/:id',
+    element: <PageProduct TypeInterface={ETypeInterface.UPDATE}/>
   },
 
 ]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ContextProvider>
-      <GlobalStyled />
-      <RouterProvider router={router} />
-    </ContextProvider>
+    <CartProvider>
+      <ContextPurchaseProvider>
+        <ContextProvider>
+          <GlobalStyled />
+          <RouterProvider router={router} />
+        </ContextProvider>
+      </ContextPurchaseProvider>
+    </CartProvider>
   </StrictMode>
 );

@@ -60,5 +60,5 @@ export interface MyCard {
     productId: string,
     productName: string,
     quantity: number,
-    price: number,
+    price: string,
 }

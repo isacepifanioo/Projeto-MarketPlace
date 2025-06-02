@@ -1,4 +1,3 @@
-import { MyCard } from "../../../models/protocols";
 import { httpRespose } from "../../protocols";
 import {
   IDeleteItensCartController,
@@ -13,7 +12,7 @@ export class DeleteItensCartController implements IDeleteItensCartController {
   async handle(
     idProduct: string,
     token: string
-  ): Promise<httpRespose<MyCard[]>> {
+  ): Promise<httpRespose<null>> {
     try {
       if (!idProduct) {
         return {
@@ -28,16 +27,16 @@ export class DeleteItensCartController implements IDeleteItensCartController {
         tokeId.id
       );
 
-      if (myCard.length === 0 || !myCard) {
+      if(myCard.length === 0) {
         return {
-          StatusCode: 400,
-          Body: "Você não tem nenhum item no seu carrinho",
+          StatusCode: 200,
+          Body: null,
         };
       }
 
       return {
         StatusCode: 200,
-        Body: myCard,
+        Body: null,
       };
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {

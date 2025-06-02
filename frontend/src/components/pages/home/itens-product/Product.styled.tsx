@@ -11,6 +11,10 @@ export const StyledItens = styled.div`
   border-radius: 5px;
   padding: 0.2em;
 
+  a {
+    height: 100%;
+    text-decoration: none;
+  }
 
   & .placeholder {
     width: 100%;

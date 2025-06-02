@@ -10,18 +10,21 @@ import { LuSearch } from "react-icons/lu";
 import { IoCartOutline } from "react-icons/io5";
 import { IoStorefront } from "react-icons/io5";
 import { CgProfile } from "react-icons/cg";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import { ContextAuth } from "../../context/useContextAuth";
 import { IFnAuth } from "../../interface/FnContext";
 import { useAxios } from "../../hook/useAxios";
 import { StyledSpiner } from "../../spiner/Spine.styled";
 import { BoxProfile } from "./box-profile/BoxProfile";
 
-import { useRef } from "react";
+import {ContextCart} from './../../context/useContextCart'
+
 import { UserRegister } from "../../interface/User";
 import { Link } from "react-router-dom";
+import { FormAddress } from "./model/formAddress/FormAddress";
 
-export default function Header() {
+export default function Header({setIsOpenDropDown}: {setIsOpenDropDown: React.Dispatch<React.SetStateAction<boolean>>}) {
+  const [isOpenAddress, setIsOpenAddress] = useState(false);
   const { isAuth } = useContext(ContextAuth) as IFnAuth;
   const [isOpen, SetIsOPen] = useState(false);
   const { data, loading } = useAxios<UserRegister>({
@@ -31,6 +34,7 @@ export default function Header() {
   const [profile, setProfile] = useState("");
 
   const boxProfileRef = useRef<HTMLDivElement>(null)
+  const {qtyItens} = useContext(ContextCart);
 
   useEffect(() => {
     if (!data) return;
@@ -48,6 +52,12 @@ export default function Header() {
       }
     }
 
+    if(isOpenAddress) {
+      document.body.style.overflow = "hidden"
+    } else {
+      document.body.style.overflow = ""
+    }
+
     document.addEventListener('mousedown', handleClickBoxProfile)
 
     return () => {
@@ -57,6 +67,7 @@ export default function Header() {
 
   return (
     <StyledHeaders>
+      {isOpenAddress && <FormAddress setIsOpenAddress={setIsOpenAddress}/>}
       <StyledInnerHeaders>
         <div className="conteineLogo">
           <IoStorefront />
@@ -65,7 +76,7 @@ export default function Header() {
         <div className="conteineLiks">
           <nav className="navBar">
             <Link to="/">Inicio</Link>
-            <Link to="#">Minhas Compras</Link>
+            <Link to="/myPurchase">Minhas Compras</Link>
             <Link to="#">Sobre</Link>
           </nav>
           <div className="navBar linksIcon">
@@ -73,9 +84,9 @@ export default function Header() {
               <LuSearch />
               <p>Search</p>
             </div>
-            <div className="box-Links">
+            <div className="box-Links" onClick={() => setIsOpenDropDown(true)}>
               <IoCartOutline />
-              <p>Cart({0})</p>
+              <p>Cart({qtyItens})</p>
             </div>
             <div className="box-Links">
               {loading ? (
@@ -91,12 +102,12 @@ export default function Header() {
                           SetIsOPen((prevent) => !prevent)
                         }
                       />
-                      {isOpen && <BoxProfile/>}
+                      {isOpen && <BoxProfile setIsOpenAddress={setIsOpenAddress}/>}
                     </div>
                   ) : (
                     <>
                       <CgProfile />
-                      <p>Login</p>
+                      <Link to="/auth">Login</Link>
                     </>
                   )}
                 </>

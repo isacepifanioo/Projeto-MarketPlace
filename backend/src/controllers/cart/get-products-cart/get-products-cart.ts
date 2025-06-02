@@ -13,10 +13,10 @@ export class GetItensCartController implements IGetItensCartController {
 
       const myCard = await this.getItensCartRepository.getItensCart(tokenId.id);
 
-      if (myCard.length === 0 || !myCard) {
+      if (myCard.length === 0) {
         return {
-          StatusCode: 400,
-          Body: "Você não tem nenhum item no seu carrinho",
+          StatusCode: 200,
+          Body: [],
         };
       }
 

@@ -30,15 +30,6 @@ export const CreateProducts = () => {
         } else {
           formData.append(key, value);
         }
-        // if (Array.isArray(value)) {
-        //   value.forEach((blob) => {
-        //     formData.append(`img`, blob);
-        //   });
-        // } else if (typeof value === "number") {
-        //   formData.append(key, value.toString());
-        // } else {
-        //   formData.append(key, value);
-        // }
       }
       await InstacieAxios.post("/products/create", formData, {
         headers: {
@@ -66,6 +57,7 @@ export const CreateProducts = () => {
   function handleCurretMesagem() {
     setError(undefined)
   }
+  
 
   return (
     <StyledSectionConteine>

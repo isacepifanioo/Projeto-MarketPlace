@@ -12,7 +12,6 @@ export const Error = ({message, handleCurretMesagem}: Props) => {
   useEffect(() => {
     if(progress >= 100) {
       handleCurretMesagem()
-      console.log('ola');
       setProgress(0)
       setIsOpen(false)
       return

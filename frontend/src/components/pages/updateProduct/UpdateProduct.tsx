@@ -6,6 +6,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { InstacieAxios } from "../../../helper/Instancer";
 import { useNavigate, useParams } from "react-router-dom";
+import { StyledUpdateProduct } from "../authProducts/UpdateProducts.Style";
 
 export const UpdateProduct = () => {
   const navigate = useNavigate();
@@ -53,6 +54,7 @@ export const UpdateProduct = () => {
           Authorization: `bearer ${JSON.parse(localStorage.getItem("token")!)}`,
         },
       });
+      navigate("/deshboard")
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const resposta = e.response?.data;
@@ -74,7 +76,7 @@ export const UpdateProduct = () => {
     setError(undefined);
   }
   return (
-    <>
+    <StyledUpdateProduct>
       <StyledSectionConteine>
         {error && (
           <Error message={error} handleCurretMesagem={handleCurretMesagem} />
@@ -93,6 +95,6 @@ export const UpdateProduct = () => {
           nameBtn="Editar Produto"
         />
       </StyledSectionConteine>
-    </>
+    </StyledUpdateProduct>
   );
 };
