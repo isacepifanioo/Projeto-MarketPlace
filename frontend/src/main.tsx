@@ -17,6 +17,7 @@ import { MyPurchase } from "./components/pages/myPurchase/MyPurchase.tsx";
 import { PagePurchase } from "./components/pages/purchase/PagePurchase.tsx";
 import { FormPurchase } from "./components/pages/FormPurchase/FormPurchase.tsx";
 import { EditFormPurchase } from "./components/pages/FormPurchase/EditFormPurchase/EditFormPurchase.tsx";
+import { PagePurchases } from "./components/pages/purchase/pagePurchases.tsx";
 export enum ETypeInterface {
     BUY = "BUY",
     UPDATE = "UPDATE"
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
       {
         path: "/:id/purchase",
         element: <PagePurchase/>
+      },
+      {
+        path: "/all/purchase",
+        element: <PagePurchases/>
       },
     ]
   },

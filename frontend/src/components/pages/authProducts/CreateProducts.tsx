@@ -3,11 +3,12 @@ import { StyledSectionConteine } from "./CreateProducts.styled";
 import AuthProducts, { Data } from "./form/AuthProducts";
 import { InforProducts } from "./form/InforProducts";
 import { InstacieAxios } from "../../../helper/Instancer";
-import { Error } from "../../layouts/model/Error/Error";
 import axios from "axios";
+import { Bounce, toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export const CreateProducts = () => {
-  const [error, setError]= useState(undefined)
+  const navigate = useNavigate()
   const [data, setData] = useState<Data>({
     img: [],
     name: "",
@@ -36,11 +37,22 @@ export const CreateProducts = () => {
           Authorization: `bearer ${JSON.parse(localStorage.getItem("token")!)}`,
         },
       });
+
+      navigate("/deshboard")
     } catch (e) {
       if(axios.isAxiosError(e)) {
         const resposta = e.response?.data
-        setError(resposta)
-        console.log(resposta);
+        toast.error(`${resposta}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
       }
     }
   }
@@ -53,15 +65,23 @@ export const CreateProducts = () => {
     })
    setData(prevent => ({...prevent, ['img']: filesItens}))
   }
-
-  function handleCurretMesagem() {
-    setError(undefined)
-  }
   
 
   return (
     <StyledSectionConteine>
-      { error && <Error message={error} handleCurretMesagem={handleCurretMesagem}/> }
+      <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}
+      />
       <InforProducts
         img={data.img}
         description={data.description}

@@ -16,6 +16,7 @@ export const PagePurchase = () => {
             }) 
             navigate("/")
         } catch (er) {
+            console.log(er);
             console.warn("Não foi possivel fazer a compra. " + er);
         }
     }

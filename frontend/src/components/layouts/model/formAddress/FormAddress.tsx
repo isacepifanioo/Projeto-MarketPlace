@@ -78,7 +78,6 @@ export const FormAddress = ({setIsOpenAddress}: Props) => {
         setIsOpenAddress(false)
         } catch (er) {
             console.warn("Deu error ao tenta add endereços, tnete novamente. " + er);
-            console.log(er);
         }
     }
 
@@ -100,7 +99,6 @@ export const FormAddress = ({setIsOpenAddress}: Props) => {
 
         setAddress(prevent => ({...prevent, [name]: value}))
     }
-    console.log(showUpdateAddress);
   return (
     <>
         <BottomBlack></BottomBlack>

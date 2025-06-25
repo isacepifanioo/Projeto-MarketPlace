@@ -1,12 +1,14 @@
 import { createContext, useEffect, useState } from 'react'
 import { InstacieAxios } from '../helper/Instancer';
 import { MyCard } from '../components/layouts/model/dropdownCart/DropdownCart';
+import axios from 'axios';
 
 interface ICartContext {
     qtyItens: number,
     getItensCart: () => Promise<void>,
+    BuyProduct: (productId: string) => Promise<void>,
     itens: MyCard[],
-    totPriceItens: number
+    totPriceItens: number,
 }
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -14,7 +16,8 @@ export const ContextCart = createContext<ICartContext>({
     qtyItens: 0,
     getItensCart: async () => {},
     itens: [],
-    totPriceItens: 0
+    totPriceItens: 0,
+    BuyProduct: async () => {},
 });
 
 
@@ -33,7 +36,6 @@ export const CartProvider = ({children}: {children: React.ReactNode}) => {
             setQtyItens(itensCart.data.length ?? 0)
             setItens(itensCart.data ?? [])
             const data: MyCard[] = itensCart.data;
-            // PRECISA FAZER A SOMA DO QTY 
             setTotPriceItens(() => {
                 return data.reduce((ac, itens) => ac + Number.parseFloat(itens.price.toString()) * itens.quantity , 0)
             })
@@ -41,9 +43,22 @@ export const CartProvider = ({children}: {children: React.ReactNode}) => {
             console.error("❌ Erro ao buscar carrinho:", err);
         }
     }
+
+    async function BuyProduct(productId: string) {
+        try {
+            await axios.post(`http://localhost:3000/purchase/create/${productId}`, {}, {
+                headers: {
+                    Authorization: `Bearer ${JSON.parse(localStorage.getItem("token")!)}`
+                }
+            })
+        } catch (er) {
+            console.log(er);
+            console.warn("Não foi possivel fazer a compra. " + er);
+        }
+    }
     
     useEffect(() => {
         getItensCart()
     }, [])
-    return <ContextCart.Provider value={{qtyItens, getItensCart, itens, totPriceItens}}>{children}</ContextCart.Provider>
+    return <ContextCart.Provider value={{qtyItens, getItensCart, itens, totPriceItens, BuyProduct}}>{children}</ContextCart.Provider>
 }

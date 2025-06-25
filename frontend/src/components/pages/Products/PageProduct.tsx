@@ -80,8 +80,7 @@ export const PageProduct = ({TypeInterface}: {TypeInterface: ETypeInterface}) =>
     return(
         <StylePageProduct>
             <StyledPageProductInfor>
-                {/* conteine da imagem */}
-                <div> 
+                {/* <div> 
                     {loadingProductById ? <StyledSpiner/> : (
                         <>
                             <StyledPageProductImg $productImg={`http://localhost:3000/${dataProductById?.img[currentImg]}`}/>
@@ -95,22 +94,25 @@ export const PageProduct = ({TypeInterface}: {TypeInterface: ETypeInterface}) =>
                         </>
                     )} 
                 </div>
-                {/* conteine infor produto */}
+
                 <div>
                     {loadingProductById ? <StyledSpiner/> : (
                         <StyledPageProductConteineInfo>
                             <h2>{dataProductById?.name}</h2>
                             {dataProductById?.reviews !== null && (
-                                <Stars
-                                    qtyStars={(dataProductById?.reviews?.reduce((ac, review) => ac + review.review.stars, 0) ?? 0) / (dataProductById?.reviews?.length || 0)}
-                                /> 
+                                <div style={{display: "flex", alignItems: "center", gap: ".5em"}}>
+                                    <Stars
+                                        qtyStars={(dataProductById?.reviews?.reduce((ac, review) => ac + Number.parseInt(review.review.stars.toString()), 0) ?? 0) / (dataProductById?.reviews?.length || 0)}
+                                    /> 
+                                    <span style={{fontSize: ".6em", backgroundColor: "#333", color: "#fafafa", padding: ".4em", borderRadius: "5px"}}>{(dataProductById?.reviews?.length || 0)} review</span>
+                                </div>
                             )}
                             <p>{dataProductById?.description}</p>
                             <h4>R$ {dataProductById?.price}</h4>
                         </StyledPageProductConteineInfo>
                     )}
                 </div>
-                {/* conteine da comprar */}
+
 
                 {TypeInterface != "UPDATE" && (
                     <StyledPageProductConteineButton>
@@ -131,20 +133,19 @@ export const PageProduct = ({TypeInterface}: {TypeInterface: ETypeInterface}) =>
                             {dataProductById?.price != null && (
                                 <strong>${(Number.parseFloat(dataProductById?.price.toString().replace(/\./g, "")) * qtyProduct).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</strong>
                             )}
-                            {/* <strong>${dataProductById?.price}</strong> */}
                         </StyledPageProductConteinePriceQty>
                         <Link to={`/${dataProductById?.id}/purchase`}>Comprar</Link>
                         <StyledPageProductButton $colorBtn="#333" $BgColorBtn="#fafafa">Adiciona ao carrinho</StyledPageProductButton>
                     </StyledPageProductConteineButton>
                 )}
-                
+                 */}
 
 
             </StyledPageProductInfor>
             {/* comentarios */}
             <div>
                 {dataProductById && dataProductById!.reviews!.length > 0 && dataProductById.reviews?.map((review, index) => (
-                    <div key={index} style={{padding: "1em", borderBottom: "1px solid #33333332", display: "flex", flexDirection: "column", gap: ".5em"}}> 
+                    <div key={index} style={{padding: "1em", borderBottom: "1px solid #33333332", display: "flex", flexDirection: "column"}}> 
                         {/* Imagem  / perfil do user */}
                         <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
                             <div style={{display: "flex", alignItems: "center", gap: "1em"}}>
@@ -156,7 +157,7 @@ export const PageProduct = ({TypeInterface}: {TypeInterface: ETypeInterface}) =>
 
 
                         <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-                            <div style={{paddingLeft: "2em", display: "flex", flexDirection: "column", gap: ".3em"}}>
+                            <div style={{display: "flex", flexDirection: "column", gap: ".3em"}}>
                                 <div style={{display: "flex", gap: ".4em", fontSize: "1.6em", cursor: "pointer"}}>
                                     <div style={{color: review.review.stars >= 1 ? "#FFD700" : "#333"}}>★</div>
                                     <div style={{color: review.review.stars >= 2 ? "#FFD700" : "#333"}}>★</div>
@@ -173,31 +174,33 @@ export const PageProduct = ({TypeInterface}: {TypeInterface: ETypeInterface}) =>
                                     <div style={{display: "flex", gap: "1em", alignItems: "center"}}>
                                         {/* preciso fazer um foreach para dd 4 a 5 img e fazer uma especie de pagination */}
                                         {review.review.reviewFile && review.review.reviewFile.length > 0 && review.review.reviewFile.slice(0, 4).map((img, index) => (
-                                            <>
-                                                <StyledImgProduct $perfilImg={`http://localhost:3000/${img}`} key={index} className="img"></StyledImgProduct>
-                                            </>
+                                            <div key={index}>
+                                                {img && <StyledImgProduct $perfilImg={`http://localhost:3000/${img}`} className="img"></StyledImgProduct>}
+                                            </div>
                                         )) }
                                     </div>
                                     <div>
                                         {review.review.reviewFile && review.review.reviewFile.length >= 4 && review.review.reviewFile.slice(4, 5).map((value, index) => (
-                                            <div style={{position: "absolute"}}>
+                                            <div style={{position: "absolute"}} key={index}>
                                                 <button style={{position: "absolute", width: "100%", height: "100%", backgroundColor: "#3333337b", border: "none"}}>{review.review.reviewFile?.length}</button>
-                                                <StyledImgProduct $perfilImg={`http://localhost:3000/${value}`} key={index} className="img"></StyledImgProduct>
+                                                <StyledImgProduct $perfilImg={`http://localhost:3000/${value}`}  className="img"></StyledImgProduct>
                                             </div>
                                         ))}
                                     </div>
                                 </div>
                             </div>
                             <div style={{position: "relative", cursor: "pointer"}}>
-                                {/* {console.log(review.userId == JSON.parse(localStorage.getItem("user")!))} */}
-                                <BsThreeDotsVertical onClick={() => setOpenThree(prevent => !prevent)}/>
-                                {openThree && (
-                                    <div style={{display: "flex", flexDirection: "column", textAlign: "center", width: "100px", position: "absolute", right: "0"}}>
-                                    <span style={{border: "1px solid black", padding: ".5em"}} onClick={() => navigate(`/myPurchase/${dataProductById.id}/editForm`)}>Editar</span>
-                                    <span style={{border: "1px solid black", borderTop: "none", padding: ".5em"}} onClick={() => handleDeleteComment(dataProductById.id)}>Deletar</span>
-                                </div>
+                                {review.userId === JSON.parse(localStorage.getItem("user")!) && (
+                                    <>
+                                        <BsThreeDotsVertical onClick={() => setOpenThree(prevent => !prevent)}/>
+                                        {openThree && (
+                                            <div style={{display: "flex", flexDirection: "column", textAlign: "center", width: "100px", position: "absolute", right: "0"}}>
+                                            <span style={{border: "1px solid black", padding: ".5em"}} onClick={() => navigate(`/myPurchase/${dataProductById.id}/editForm`)}>Editar</span>
+                                            <span style={{border: "1px solid black", borderTop: "none", padding: ".5em"}} onClick={() => handleDeleteComment(dataProductById.id)}>Deletar</span>
+                                        </div>
+                                        )}
+                                    </>
                                 )}
-                                
                             </div>
                         </div>
 

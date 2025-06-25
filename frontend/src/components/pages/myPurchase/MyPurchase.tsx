@@ -15,7 +15,6 @@ interface Purchase {
 export const MyPurchase = () => {
     const[historyPurchase, setHistoryPurchase] = useState<Purchase[]>([])
     const [products, setProducts] = useState<IProducts[]>([])
-    // const [existReview, setExistReview] = useState(false)
     useEffect(() => {
         async function getHistoryPurchase() {
             try {
@@ -48,17 +47,6 @@ export const MyPurchase = () => {
 
         getProduct()
     }, [])
-
-    useEffect(() => {
-       const a = products.find(value => value.reviews?.find(review => review.userId == JSON.parse(localStorage.getItem("user")!)))
-       console.log(a);
-
-       historyPurchase.map(productvaluePurchase => {
-        const a = products.some(value => value.reviews?.find(review => review.userId == JSON.parse(localStorage.getItem("user")!))) && products.some(value => value.id === productvaluePurchase.productId) 
-        console.log("a: ", !a);
-       })
-    //    products.some(value => value.reviews?.find(review => review.userId == JSON.parse(localStorage.getItem("user")!))) && products.some(value => value.id === productvaluePurchase.productId) 
-    })
   return (
     <div>
         <h1>Minhas compras</h1>

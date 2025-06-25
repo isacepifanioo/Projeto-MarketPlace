@@ -60,13 +60,14 @@ export async function UpdateReview(req: Request, res: Response) {
   let newReview = {
     ...req.body,
   };
+  
   if (files) {
     const imgPaths = files.map((file) =>
       `${file.destination}/${file.filename}`.replace("src/", "")
     );
     newReview = {
       ...req.body,
-      reviewFile: imgPaths,
+      reviewFile: [req.body.reviewFile, ...imgPaths],
     };
   }
 

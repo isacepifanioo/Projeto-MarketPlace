@@ -1,16 +1,15 @@
 import { StyledSectionConteine } from "../authProducts/CreateProducts.styled";
 import { InforProducts } from "../authProducts/form/InforProducts";
 import AuthProducts, { Data } from "../authProducts/form/AuthProducts";
-import { Error } from "../../layouts/model/Error/Error";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { InstacieAxios } from "../../../helper/Instancer";
 import { useNavigate, useParams } from "react-router-dom";
 import { StyledUpdateProduct } from "../authProducts/UpdateProducts.Style";
+import { Bounce, toast, ToastContainer } from "react-toastify";
 
 export const UpdateProduct = () => {
   const navigate = useNavigate();
-  const [error, setError] = useState(undefined);
   const [data, setData] = useState<Data>({
     img: [],
     name: "",
@@ -58,7 +57,17 @@ export const UpdateProduct = () => {
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const resposta = e.response?.data;
-        setError(resposta);
+        toast.error(`${resposta}`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
       }
     }
   }
@@ -72,15 +81,22 @@ export const UpdateProduct = () => {
     setData((prevent) => ({ ...prevent, ["img"]: filesItens }));
   }
 
-  function handleCurretMesagem() {
-    setError(undefined);
-  }
   return (
     <StyledUpdateProduct>
       <StyledSectionConteine>
-        {error && (
-          <Error message={error} handleCurretMesagem={handleCurretMesagem} />
-        )}
+        <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick={false}
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+            transition={Bounce}
+        />
         <InforProducts
           img={data.img}
           description={data.description}

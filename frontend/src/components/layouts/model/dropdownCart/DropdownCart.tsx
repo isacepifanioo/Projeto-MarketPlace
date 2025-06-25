@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { ConteineControllerBuy, ConteineDropDown, ConteineItens, ConteineQtyProduct, ConteineTitle, ImgItensCart } from "./DropdownCart.Styled"
 import {forwardRef, useContext} from "react"
 import { ContextCart } from "../../../../context/useContextCart"
 import { InstacieAxios } from "../../../../helper/Instancer"
-// import { Product } from "../../../pages/home/itens-product/Product"
 export interface MyCard {
     img: string,
     productId: string,
@@ -19,6 +18,7 @@ interface Props {
 export const DropDownCart = forwardRef<HTMLDivElement, Props>(({isOpen}, ref) => {
     const {itens, totPriceItens} = useContext(ContextCart);
     const {getItensCart} = useContext(ContextCart)
+    const navigate = useNavigate()
 
 
     async function handleAddBtnBag(e: React.MouseEvent<HTMLButtonElement, MouseEvent>, id: string) {
@@ -52,6 +52,15 @@ export const DropDownCart = forwardRef<HTMLDivElement, Props>(({isOpen}, ref) =>
 
     }
 
+    async function handleWithBuyAll() {
+        try {
+            // setItensSelect(itens)
+            navigate("/all/purchase")
+        } catch (e) {
+            console.warn(e);
+        }  
+    }
+
     return (
         <ConteineDropDown ref={ref} style={{transform: isOpen ? "translateX(0)" : "translateX(100%)", opacity: isOpen ? "1" : "0"}}>
              <ConteineItens>
@@ -72,7 +81,7 @@ export const DropDownCart = forwardRef<HTMLDivElement, Props>(({isOpen}, ref) =>
              </ConteineItens>
                  <ConteineControllerBuy>
                     <h2>Sub-Total <span>R$ {totPriceItens ? totPriceItens : "0.00"}</span></h2>
-                    <button>Comprar</button>
+                    <button onClick={handleWithBuyAll}>Comprar</button>
                 </ConteineControllerBuy>
         </ConteineDropDown>
     )

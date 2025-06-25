@@ -97,7 +97,6 @@ export const EditFormPurchase = () => {
 
     async function patchComment(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log(data);
         try {
           const formData = new FormData();
     
@@ -106,7 +105,12 @@ export const EditFormPurchase = () => {
     
             if (Array.isArray(value)) {
               value.forEach((blob) => {
-                formData.append(`reviewFile`, blob);
+                if(typeof blob === "string") {
+                  formData.append(`reviewFile`, blob);
+                }
+                if(blob instanceof File) {
+                  formData.append(`reviewFile`, blob);
+                }
               });
             } else if(value) {
               formData.append(key, value.toString());
@@ -125,8 +129,6 @@ export const EditFormPurchase = () => {
 
         navigate(`/${id}`)
       }
-
-      // console.log(data.reviewFile);
 
     function handleArrowBack() {
         if(position < 1) return

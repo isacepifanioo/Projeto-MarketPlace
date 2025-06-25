@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom"
 import { StyledInnerGlobal } from "./GlobalStyele"
 import { DropDownCart } from "./components/layouts/model/dropdownCart/DropdownCart"
 import {useEffect, useRef, useState} from "react"
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [isOpenDropDown, setIsOpenDropDown] = useState(false)

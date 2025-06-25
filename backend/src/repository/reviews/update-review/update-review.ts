@@ -16,13 +16,14 @@ export class MongoUpdateReviewRepository implements IUpdateReviewReporsitory {
       (review) => review.userId === tokenId
     ) as IPerfilWithReviews;
 
-    if (bodyUpdate.reviewFile) {
-      PerfilWithReview.review.reviewFile?.map((img) =>
+    const reviewDeleted = PerfilWithReview.review.reviewFile?.filter(img => !bodyUpdate.reviewFile?.includes(img)) 
+
+    if (reviewDeleted) {
+      reviewDeleted.map((img) =>
         fs.unlink(path.resolve(__dirname, "../../../", `${img}`), () =>
           console.log("deleted")
         )
       );
-      
     }
 
     const newPerfilWithReview = {
